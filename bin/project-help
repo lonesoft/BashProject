@@ -18,9 +18,25 @@ EOF
 function main-start(){ cat << EOF
 Usage:
         project start [--help]
+                      [--path | -p] <path>
+                      [--title | -t] <title>
+                      [--prompt | -m] <prompt>
 
 Description:
     Start a project
+
+Options:
+      -h, --help
+        show this help
+
+      -p, --path <path>
+        path for the project. Default is the current pwd
+
+      -t, --title <title>
+        project title
+
+      -m, --prompt <prompt>
+        prompt (PS1)
 EOF
 }
 

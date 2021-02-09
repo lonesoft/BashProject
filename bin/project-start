@@ -4,10 +4,24 @@ function main(){
   local path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   local script=$(basename "$0")
 
+  export PROJECT_PATH="$(pwd)"
+
   local positional=()
   while [[ $# -gt 0 ]]; do
-    key="$1"
+    local key="$1"
     case $key in
+      -p|--path)
+        export PROJECT_PATH="$2"
+        shift; shift # past arguments
+        ;;
+      -t|--title)
+        export PROJECT_TITLE="$2"
+        shift; shift # past arguments
+        ;;
+      -m|--prompt)
+        export PROJECT_PROMPT="$2"
+        shift; shift # past arguments
+        ;;
       -h|--help|-*|--*)
         shift # past argument
         ${path}/project-help start "$*"
@@ -21,7 +35,6 @@ function main(){
   done
   set -- "${positional[@]}" # restore positional parameters
   local init_file="${path}/project-bootstrap"
-
   type gnome-terminal >/dev/null 2>&1 \
     && gnome-terminal -- bash --init-file $init_file \
     || bash --init-file $init_file

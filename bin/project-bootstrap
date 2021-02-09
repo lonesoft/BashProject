@@ -1,1 +1,61 @@
 #!/usr/bin/env bash
+
+set -o pipefail;
+#set -o nounset
+set -o errexit
+#set -o xtrace
+
+function project_prepend_path(){
+  local path=$1
+  if [[ -d "$path" ]]; then
+    if [[ ":$PATH:" != *":$path:"* ]]; then
+      export PATH=$path:$PATH
+    fi
+  fi
+}
+
+function project_add_env(){
+  local base=$1
+  project_prepend_path "${base}/vendor/bin"
+  project_prepend_path "${base}/bin"
+}
+
+function project_paths(){
+  # the priority follow the logic:
+  #  1. project bin (lower)
+  #  2. user
+  #  3. extra paths
+  #  4. project Local/bin (higher)
+
+  project_add_env $PROJECT_PATH
+  project_add_env ~/lib/bash-project
+  project_add_env ~/lib/bash-project/local
+  ## insert here extra paths
+  project_add_env $PROJECT_PATH/local
+}
+
+function main(){
+  export PROJECT_PATH=${PROJECT_PATH-"$(pwd)"}
+  project_paths
+
+  export PROJECT_TITLE=${PROJECT_TITLE:-"Bash Project"}
+  export PROJECT_PROMPT=${PROJECT_PROMPT:-"\n\[\033[92m\]\u@\h \[\033[91m\]$PROJECT_TITLE: \[\033[93m\]\w\[\033[0m\]\n\$ "}
+
+  if [[ -d "PROJECT_PATH/local" ]]; then
+    export HISTFILE=PROJECT_PATH/local/.bash_history
+  fi
+
+  export PS1=$PROJECT_PROMPT
+  cd $PROJECT_PATH
+
+  hash -r
+
+}
+
+main "$@"
+
+unset -f project_prepend_path
+unset -f project_add_env
+unset -f project_paths
+unset -f main
+
