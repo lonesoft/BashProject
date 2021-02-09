@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+
+function main-help(){ cat << EOF
+Usage:
+        project [--help]
+                <command> [<args>]
+
+Description:
+        Manage local environment for a project
+
+Commands:
+        start       start a project
+
+EOF
+}
+
+function main(){
+  case $1 in
+    *)
+      main-help
+      ;;
+  esac
+
+}
+
+main "$@"
+
+unset -f main-help
+unset -f main
