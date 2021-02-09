@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+function main(){
+  local path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  local script=$(basename "$0")
+  local positional=()
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+      -h|--help)
+        shift # past argument
+        ${path}/project-help start "$*"
+        return
+        ;;
+      *)    # unknown option
+        positional+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+  done
+  set -- "${positional[@]}" # restore positional parameters
+}
+
+main "$@"
+
+unset -f main

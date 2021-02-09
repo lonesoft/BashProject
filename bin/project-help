@@ -15,8 +15,20 @@ Commands:
 EOF
 }
 
+function main-start(){ cat << EOF
+Usage:
+        project start [--help]
+
+Description:
+    Start a project
+EOF
+}
+
 function main(){
   case $1 in
+    start)
+      main-$1
+      ;;
     *)
       main-help
       ;;
@@ -27,4 +39,5 @@ function main(){
 main "$@"
 
 unset -f main-help
+unset -f main-start
 unset -f main

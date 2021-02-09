@@ -5,6 +5,10 @@ function main(){
   local script=$(basename "$0")
   local exec=help
   case $1 in
+    start)
+      exec=$1
+      shift
+      ;;
     -h|--help)
       shift
       ;;
