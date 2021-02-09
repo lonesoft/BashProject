@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 function main(){
-  local path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  local path="$( cd "$( dirname "$( realpath "${BASH_SOURCE[0]}" )" )" && pwd )"
   local script=$(basename "$0")
+
   local exec=help
   case $1 in
     start)

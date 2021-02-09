@@ -25,6 +25,9 @@ EOF
 }
 
 function main(){
+  local path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  local script=$(basename "$0")
+
   case $1 in
     start)
       main-$1
