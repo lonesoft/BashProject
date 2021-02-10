@@ -11,7 +11,7 @@ function main(){
     local key="$1"
     case $key in
       -p|--path)
-        export PROJECT_PATH="$2"
+        export PROJECT_PATH="$( realpath "$2" )"
         shift; shift # past arguments
         ;;
       -t|--title)
