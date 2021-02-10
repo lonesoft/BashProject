@@ -1,2 +1,6 @@
 # BashProject
-Runs local environment for a project
+Manage local environment for a project
+
+## Usage
+    project start
+    

@@ -1,1 +1,29 @@
 #!/usr/bin/env bash
+
+set -o pipefail;
+#set -o nounset
+set -o errexit
+#set -o xtrace
+
+function main(){
+  local path="$( cd "$( dirname "$( realpath "${BASH_SOURCE[0]}" )" )" && pwd )"
+  local script=$(basename "$0")
+
+  local exec=help
+  case $1 in
+    start)
+      exec=$1
+      shift
+      ;;
+    -h|--help)
+      shift
+      ;;
+    *)
+      ;;
+  esac
+  ${path}/${script}-$exec "$@"
+}
+
+main "$@"
+
+unset -f main

@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+
+function main-help(){ cat << EOF
+Usage:
+        project [--help]
+                <command> [<args>]
+
+Description:
+        Manage local environment for a project
+
+Commands:
+        start       start a project
+
+EOF
+}
+
+function main-start(){ cat << EOF
+Usage:
+        project start [--help]
+                      [--path | -p] <path>
+                      [--title | -t] <title>
+                      [--prompt | -m] <prompt>
+
+Description:
+    Start a project
+
+Options:
+      -h, --help
+        show this help
+
+      -p, --path <path>
+        path for the project. Default is the current pwd
+
+      -t, --title <title>
+        project title
+
+      -m, --prompt <prompt>
+        prompt (PS1)
+EOF
+}
+
+function main(){
+  local path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  local script=$(basename "$0")
+
+  case $1 in
+    start)
+      main-$1
+      ;;
+    *)
+      main-help
+      ;;
+  esac
+
+}
+
+main "$@"
+
+unset -f main-help
+unset -f main-start
+unset -f main
