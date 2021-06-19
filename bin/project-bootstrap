@@ -38,7 +38,9 @@ function main(){
   export PROJECT_PATH=${PROJECT_PATH-"$(pwd)"}
   project_paths
 
-  if [ -f "$HOME/.profile" ]; then
+  if [ -f "$HOME/.bash_profile" ]; then
+    . "$HOME/.bash_profile"
+  elif [ -f "$HOME/.profile" ]; then
     . "$HOME/.profile"
   fi
 
