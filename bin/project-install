@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 function main(){
+  local path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   local PROJECT_TITLE="Bash Project"
   local positional=()
   while [[ $# -gt 0 ]]; do
@@ -36,15 +37,13 @@ function main(){
     mkdir -p "$local"
   fi
 
-  if [ ! -f "$start" ]; then
     cat << EOF > $start
 #!/usr/bin/env bash
 
 vendor/bin/project start --title "$PROJECT_TITLE"
 EOF
-  fi
 
-  if [ ! -f "$start_cmd" ]; then
+  if [[ $(grep Microsoft /proc/version) ]]; then
     cat << EOF > $start_cmd
 @ECHO OFF
 TITLE $PROJECT_TITLE
