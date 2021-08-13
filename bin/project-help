@@ -10,6 +10,7 @@ Description:
         Manage local environment for a project
 
 Commands:
+        install     install project files / folders
         start       start a project
 
 EOF
@@ -37,6 +38,24 @@ Options:
 
       -m, --prompt <prompt>
         prompt (PS1)
+EOF
+}
+
+function main-install(){ cat << EOF
+Usage:
+        project install [--help]
+                      [--title | -t] <title>
+
+Description:
+    Start a project
+
+Options:
+      -h, --help
+        show this help
+
+      -t, --title <title>
+        project title
+
 EOF
 }
 
