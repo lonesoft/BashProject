@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+function main(){
+  local PROJECT_TITLE="Bash Project"
+  local positional=()
+  while [[ $# -gt 0 ]]; do
+    local key="$1"
+    case $key in
+      -t|--title)
+        local PROJECT_TITLE="$2"
+        shift; shift # past arguments
+        ;;
+      -h|--help|-*|--*)
+        shift # past argument
+        ${path}/project-help install "$*"
+        return
+        ;;
+      *)    # unknown option
+        positional+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+  done
+
+  local path="$( pwd )"
+  local bin="$path/bin"
+  local local="$path/local/bin"
+  local start="$path/project-start"
+  local start_cmd="$path/project-start.cmd"
+
+  if [ ! -d "$bin" ]; then
+    mkdir "$bin"
+  fi
+
+  if [ ! -d "$local" ]; then
+    mkdir -p "$local"
+  fi
+
+  if [ ! -f "$start" ]; then
+    cat << EOF > $start
+#!/usr/bin/env bash
+
+vendor/bin/project start --title "$PROJECT_TITLE"
+EOF
+  fi
+
+  if [ ! -f "$start_cmd" ]; then
+    cat << EOF > $start_cmd
+@ECHO OFF
+TITLE $PROJECT_TITLE
+SETLOCAL
+    WHERE wsl >nul 2>&1
+    IF ERRORLEVEL 1 ECHO wsl command not found && PAUSE && GOTO :exit
+    FOR /F "tokens=* USEBACKQ" %%F IN (`wsl wslpath -ua '%~dp0\project-start'`) DO SET bin=%%F
+    wsl . ~/.profile; %bin%
+    IF ERRORLEVEL 1 PAUSE
+:exit
+ENDLOCAL
+EXIT
+EOF
+
+  fi
+
+}
+
+main "$@"
+
+unset -f main
