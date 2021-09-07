@@ -44,7 +44,7 @@ EOF
 
     cat << EOF > $start_cmd
 @ECHO OFF
-%~dp0\bin\project-start.cmd "$PROJECT_TITLE"
+%~dp0vendor\lonesoft\bash-project\bin\project-start.cmd "$PROJECT_TITLE"
 EOF
 
 }
