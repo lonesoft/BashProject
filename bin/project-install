@@ -37,15 +37,19 @@ function main(){
     mkdir -p "$local"
   fi
 
+  if [ ! -f "$start" -o "$PROJECT_TITLE" --ne "Bash Project" ]; then
     cat << EOF > $start
 #!/usr/bin/env bash
 vendor/bin/project start --title "$PROJECT_TITLE"
 EOF
+  fi
 
+  if [ ! -f "$start_cmd" -o "$PROJECT_TITLE" --ne "Bash Project" ]; then
     cat << EOF > $start_cmd
 @ECHO OFF
 %~dp0vendor\lonesoft\bash-project\bin\project-start.cmd "$PROJECT_TITLE"
 EOF
+  fi
 
 }
 
