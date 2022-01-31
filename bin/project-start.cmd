@@ -1,5 +1,5 @@
 @ECHO OFF
-TITLE %1
+TITLE %~1
 SETLOCAL
     WHERE wsl >nul 2>&1
     IF ERRORLEVEL 1 ECHO wsl command not found && PAUSE && GOTO :exit
